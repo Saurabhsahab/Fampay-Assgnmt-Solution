@@ -1,0 +1,104 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Search YouTube</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static '/style.css' %}" rel="stylesheet">
+  </head>
+  <body>
+
+<main role="main">
+
+
+{% comment %} NAVBAR {% endcomment %}
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <img
+      <a class="navbar-brand" href="#">FAMTUBE</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="video">Videos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Search Here</a>
+          </li>
+        </ul>
+        <form class="d-flex" method="POST" >
+              {% csrf_token %}
+            <input type="text" name="search" class="form-control" aria-label="Username">
+            
+              <button type="submit" name="submit" value="search" class="btn btn-outline-success" >Search</button>
+              <button type="submit" name="submit" value="lucky" class="btn btn-outline-success">All</button>
+            
+          </form>
+      </div>
+    </div>
+  </nav>
+
+
+{% comment %} For Pagination {% endcomment %}
+
+<div>
+  {% if videos.has_previous %}
+  <a href="{%url 'home' %}?page={{videos.previous_page_number}}">Previous Page</a>
+  {%endif%}
+  {% if videos.has_next %}
+  <a href="{%url 'home' %}?page={{videos.next_page_number}}">Next Page</a>
+  {%endif%}
+</div>
+
+
+{% comment %} For Videos {% endcomment %}
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        {% for video in videos %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{ video.thumbnail }}" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"></img>
+            <div class="card-body">
+              <p class="card-text">{{ video.title }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a type="button" href="{{ video.url }}" class="btn btn-sm btn-outline-secondary">View</a>
+                </div>
+                <small class="text-muted">{{ video.upload_time }} </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
