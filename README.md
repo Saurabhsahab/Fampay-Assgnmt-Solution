@@ -41,7 +41,7 @@ To get a local copy up and running follow these simple steps.
 1. Clone the repo
 
 ```sh
-git clone https://github.com/Vaibhav2801/FamPay-Assignment.git
+git clone https://github.com/Saurabhsahab/Fampay-Assgnmt-Solution.git
 ```
 
 2. Install Django
